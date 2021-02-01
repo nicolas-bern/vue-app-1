@@ -10,14 +10,15 @@
 
         <div class="content">
             <h1>Pokedex</h1>
-            <p>name : <b>{{ name }}</b></p>
-            <p>type : <b>{{ type }}</b></p>
-            <p>weight : <b>{{ weight }}</b></p>
-            <p>height : <b>{{ height }}</b></p>
-
             <div class="image">
-                <img :src="photoUrl">
+                <img :src="photoUrl" height="200px" width="200px">
             </div>
+            <p>Name : <b>{{ name }}</b></p>
+            <p>Type : <b>{{ type }}</b></p>
+            <p>Weight : <b>{{ weight }}</b></p>
+            <p>Height : <b>{{ height }}</b></p>
+
+
         </div>
 
         <div class="button">
@@ -25,6 +26,10 @@
             <button v-on:click="nextPokemon">Next Pokemon</button>
         </div>
 
+        <div class="textArea">
+            <textarea placeholder="Find a Pokemon" v-model="pokemonName" name="pokemonName"></textarea>
+            <button type="submit" v-on:click="searchPokemon(pokemonName)">OK</button>
+        </div>
 
 
     </div>
@@ -39,11 +44,12 @@
 
         data: {
             index: 1,
+            pokemonName: "",
             name: "",
             type: "",
             weight: "",
             height: "",
-            photoUrl: ''
+            photoUrl: ""
         },
 
         created(){
@@ -59,6 +65,7 @@
                     this.weight = res.data['weight']
                     this.height = res.data['height']
                     this.photoUrl = res.data['sprites']['front_default']
+                    this.index = res.data['id']
                 })
             },
 
@@ -82,6 +89,10 @@
                     this.homePage(this.index)
                 }
                 console.log("index = " + this.index)
+            },
+
+            searchPokemon: function (nomPokemon){
+                this.homePage(nomPokemon)
             }
         }
     })
