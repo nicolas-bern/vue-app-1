@@ -8,18 +8,23 @@
 <body>
     <div id="main">
 
-        <h1>Pokemon</h1>
-        <p>nom : <b>{{ nom }}</b></p>
-        <p>type : <b>{{ type }}</b></p>
-        <p>poids : <b>{{ poids }}</b></p>
-        <p>taille : <b>{{ taille }}</b></p>
-        <p>photoUrl : <b>{{ photoUrl }}</b></p>
+        <div class="content">
+            <h1>Pokedex</h1>
+            <p>name : <b>{{ name }}</b></p>
+            <p>type : <b>{{ type }}</b></p>
+            <p>weight : <b>{{ weight }}</b></p>
+            <p>height : <b>{{ height }}</b></p>
 
-        <div class="image">
-            <img :src="photoUrl">
+            <div class="image">
+                <img :src="photoUrl">
+            </div>
         </div>
 
-        <button v-on:click="nextPokemon">Next Pokemon</button>
+        <div class="button">
+            <button v-on:click="previousPokemon">Previous Pokemon</button>
+            <button v-on:click="nextPokemon">Next Pokemon</button>
+        </div>
+
 
 
     </div>
@@ -27,34 +32,52 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="api.js"></script>
 <script>
 
     new Vue({
         el: '#main',
 
         data: {
-            nom: "",
+            index: 1,
+            name: "",
             type: "",
-            poids: "",
-            taille: "",
+            weight: "",
+            height: "",
             photoUrl: ''
         },
 
-        beforeCreate(){
-            axios.get(apiUrl).then(res =>{
-                this.nom = res.data['forms']['0']['name']
+        created(){
+            console.log("index : " + this.index)
+            axios.get('https://pokeapi.co/api/v2/pokemon/'+this.index).then(res =>{
+                this.name = res.data['forms']['0']['name']
                 this.type = res.data['types']['0']['type']['name']
-                this.poids = res.data['weight']
-                this.taille = res.data['height']
+                this.weight = res.data['weight']
+                this.height = res.data['height']
                 this.photoUrl = res.data['sprites']['front_default']
             })
         },
 
         methods: {
+            previousPokemon: function (){
+                if (this.index == 1){
+                    this.index = 151
+                    location.reload()
+                } else{
+                    this.index--
+                    location.reload()
+                }
+                console.log("index = " + this.index)
+            },
+
             nextPokemon: function (){
-                index++
-                console.log(index)
+                if (this.index == 151){
+                    this.index = 1
+                    location.reload()
+                }else{
+                    this.index++
+                    location.reload()
+                }
+                console.log("index = " + this.index)
             }
         }
     })
