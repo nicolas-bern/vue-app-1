@@ -9,8 +9,18 @@
     <div id="main">
 
         <h1>Pokemon</h1>
-        <p>nom : <b>{{ name }}</b></p>
+        <p>nom : <b>{{ nom }}</b></p>
         <p>type : <b>{{ type }}</b></p>
+        <p>poids : <b>{{ poids }}</b></p>
+        <p>taille : <b>{{ taille }}</b></p>
+        <p>photoUrl : <b>{{ photoUrl }}</b></p>
+
+        <div class="image">
+            <img :src="photoUrl">
+        </div>
+
+        <button v-on:click="nextPokemon">Next Pokemon</button>
+
 
     </div>
 
@@ -24,16 +34,28 @@
         el: '#main',
 
         data: {
-            String: name,
-            String: type
+            nom: "",
+            type: "",
+            poids: "",
+            taille: "",
+            photoUrl: ''
         },
 
         beforeCreate(){
             axios.get(apiUrl).then(res =>{
-                this.name = res.data['forms']['0']['name']
+                this.nom = res.data['forms']['0']['name']
                 this.type = res.data['types']['0']['type']['name']
-                console.log(res.data['forms']['0']['name'])
+                this.poids = res.data['weight']
+                this.taille = res.data['height']
+                this.photoUrl = res.data['sprites']['front_default']
             })
+        },
+
+        methods: {
+            nextPokemon: function (){
+                index++
+                console.log(index)
+            }
         }
     })
 
