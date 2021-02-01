@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="main">
+
+        <h1>Pokemon</h1>
+        <p>nom : <b>{{ name }}</b></p>
+        <p>type : <b>{{ type }}</b></p>
+
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="api.js"></script>
+<script>
+
+    new Vue({
+        el: '#main',
+
+        data: {
+            String: name,
+            String: type
+        },
+
+        beforeCreate(){
+            axios.get(apiUrl).then(res =>{
+                this.name = res.data['forms']['0']['name']
+                this.type = res.data['types']['0']['type']['name']
+                console.log(res.data['forms']['0']['name'])
+            })
+        }
+    })
+
+</script>
+</body>
+</html>
