@@ -72,22 +72,20 @@
             previousPokemon: function (){
                 if (this.index == 1){
                     this.index = 151
-                    this.homePage(this.index)
                 } else{
                     this.index--
-                    this.homePage(this.index)
                 }
+                this.homePage(this.index)
                 console.log("index = " + this.index)
             },
 
             nextPokemon: function (){
                 if (this.index == 151){
                     this.index = 1
-                    this.homePage(this.index)
                 }else{
                     this.index++
-                    this.homePage(this.index)
                 }
+                this.homePage(this.index)
                 console.log("index = " + this.index)
             },
 
