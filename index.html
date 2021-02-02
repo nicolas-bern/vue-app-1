@@ -70,7 +70,7 @@
             },
 
             previousPokemon: function (){
-                if (this.index == 1){
+                if (this.index <= 1){
                     this.index = 151
                 } else{
                     this.index--
@@ -80,7 +80,7 @@
             },
 
             nextPokemon: function (){
-                if (this.index == 151){
+                if (this.index >= 151){
                     this.index = 1
                 }else{
                     this.index++
